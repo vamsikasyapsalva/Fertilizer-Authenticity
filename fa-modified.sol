@@ -4,11 +4,12 @@ pragma solidity ^0.4.26;
 
 contract FertilizerAuthenticity
 {
-    string[] public Fertilizer_Companies;
+    string[] Fertilizer_Companies;
     string Fertilizer_Name;
     bool  public exists;
     string extract;
     address public owner;
+    bool public deleted;
 //Here the address of smart contract operator is compared with deployer address if they are same then operator can have access to 'add_Fertilizer_Company' and 'Delete_Company' functions. 
     modifier OnlyOwner{
         require(msg.sender == owner);
@@ -55,15 +56,18 @@ contract FertilizerAuthenticity
                 }
                 delete Fertilizer_Companies[Fertilizer_Companies.length-1];
                 Fertilizer_Companies.length--;
+                deleted = true;
                 break;
+            }
+            else
+            {
+                deleted = false;
             }
             
         }
     }
          
 }
-    
-    
      
     
     
