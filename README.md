@@ -1,3 +1,3 @@
 # Fertilizer-Authenticity
 
-Dapp-Link : https://oneclickdapp.com/control-index/
+Dapp-Link : https://oneclickdapp.com/instant-focus
