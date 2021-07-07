@@ -1,15 +1,15 @@
-//Motto of this smart contract is to provide Genuine Fertilizers to the buyers.
+//Motto of this smart contract is to provide Fertilizers from genuine companies to the buyers.
 
 pragma solidity ^0.4.23;
 
 contract FertilizerAuthenticity
 {
-    string[]  Fertilizer_Companies;
+    string[] Fertilizer_Companies;
     string[] feedback;
     string Fertilizer_Name;
     string  public exists;
     address public owner;
-    bool feed;
+    string feed = "yes";
     string public deleted;
      
 //Here the address of smart contract operator is compared with deployer address if they are same then operator can have access to 'add_Fertilizer_Company' and 'Delete_Company' functions. 
@@ -34,11 +34,12 @@ contract FertilizerAuthenticity
         
         Fertilizer_Name = Company;
     }
+    
 //Function which compares the Input_Company with each and every company by hash value.
     function Compare_Fertilizer_Companies() public{
-        exists = ": Not_Found";
+        exists = ":oh..! no cannot find buddy";
         for(uint i=0;i<Fertilizer_Companies.length;i++){
-            if(keccak256(Fertilizer_Companies[i]) == keccak256(Fertilizer_Name)){
+            if(keccak256(abi.encode(Fertilizer_Companies[i])) == keccak256(abi.encode(Fertilizer_Name))){
                 
                 exists = Fertilizer_Companies[i];
                 break;
@@ -50,9 +51,21 @@ contract FertilizerAuthenticity
     
     
 
-    function Com_Feedback( bool fb) public{
-            feed = fb;
-            if(feed == false && keccak256(abi.encode(exists)) == keccak256(abi.encode( Fertilizer_Name))){
+    function Com_Feedback( string Fert_Feed,string weather) public{
+            if(keccak256(abi.encode(Fert_Feed)) == keccak256(abi.encode("no")) && keccak256(abi.encode(weather)) == keccak256(abi.encode("no")) ){
+                feed = "no";
+            }
+            if(keccak256(abi.encode(Fert_Feed)) == keccak256(abi.encode("no")) && keccak256(abi.encode(weather)) == keccak256(abi.encode("yes")) ){
+                feed = "no";
+            }
+            if(keccak256(abi.encode(Fert_Feed)) == keccak256(abi.encode("yes")) && keccak256(abi.encode(weather)) == keccak256(abi.encode("yes")) ){
+                feed = "yes";
+            }
+            if(keccak256(abi.encode(Fert_Feed)) == keccak256(abi.encode("yes")) && keccak256(abi.encode(weather)) == keccak256(abi.encode("no")) ){
+                feed = "yes";
+            }
+            
+            if(keccak256(abi.encode(feed)) == keccak256(abi.encode("no")) && keccak256(abi.encode(exists)) == keccak256(abi.encode( Fertilizer_Name))){
                 feedback.push(Fertilizer_Name);
                 
             }
@@ -63,7 +76,7 @@ contract FertilizerAuthenticity
 //Function will delete the company from array.
    function Delete_Company()public OnlyOwner  {
            
-        deleted = ': Not_Found';
+        deleted = 'sorry cannot be discarded';
         
         for(uint i=0; i<Fertilizer_Companies.length; i++) {
             uint count = 0;
